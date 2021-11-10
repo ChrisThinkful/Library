@@ -8,10 +8,10 @@ function Book(title, author, numPages, read){
 }
 
 function addBookToLibrary(book){
-    myLibrary.push(book)
+    
 }
 
 
 function libraryDisplay(myLibrary){
-    
+
 }
