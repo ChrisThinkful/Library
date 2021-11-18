@@ -1,7 +1,7 @@
 # Library
- An extension of a 'Book' constructor to create a small library application
+An extension of a 'Book' constructor to create a small library application
 
- [Live Demo](https://christhinkful.github.io/Library/)
+[Live Demo](https://christhinkful.github.io/Library/)
  
 ## To-Dos
 
