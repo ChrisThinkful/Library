@@ -1,7 +1,6 @@
 # Library
  An extension of a 'Book' constructor to create a small library application
 
-    :point_down:
  [Live Demo](https://christhinkful.github.io/Library/)
  
 ## To-Dos
