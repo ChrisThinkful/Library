@@ -11,7 +11,6 @@
         - a checkbox to enable deletion of multiple at once with a delete button somewhere on the page?
         - a delete button in a cell?
 - [ ] Store the library, and added books, in local storage
-- [ ] 
 
 
 ## Issues
