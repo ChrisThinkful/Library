@@ -5,8 +5,7 @@ class Book {
         this.pages = pages;
         this.status = status;
     }
-}
-
+};
 
 const readBtn = document.querySelectorAll('[data-read-button]')
 const newBookBtn = document.querySelector('[data-add-book]')
@@ -20,10 +19,9 @@ const pages = document.getElementById('pages');
 const readStatus = document.getElementById('status');
 const table = document.createElement('table');
 
-// myLibrary needs to be the array of books
 let myLibrary = [];
 
-let headers = ['Title', 'Author', 'Number of Pages', 'Read/Unread', 'Change']
+let headers = ['Title', 'Author', 'Number of Pages', 'Read/Unread', 'Change'];
 
 // headings for the table
 function headerDisplay() {
@@ -37,7 +35,8 @@ function headerDisplay() {
     });
     table.appendChild(headerRow);
     myTable.appendChild(table);
-}
+};
+
 headerDisplay();
 
 // the display for books added to myLibrary
@@ -45,7 +44,7 @@ function libraryDisplay() {
     myLibrary.forEach(item => {
         let row = document.createElement('tr');
         let remove = document.createElement('td');
-        remove.innerText = 'Remove'
+        remove.innerHTML = '<button data-remove-button>' + 'Remove' + '</button>'
 
         Object.values(item).forEach(text => {
             let cell = document.createElement('td');
@@ -57,33 +56,32 @@ function libraryDisplay() {
         table.appendChild(row);
     });
     myTable.appendChild(table);
-}
-
+};
 
 // New Book button opens form to create a new book
 newBookBtn.onclick = () => {
     modal.style.display = "flex";
-}
+};
 
 // creates a new book
 submitBtn.onclick = (e) => {
     e.preventDefault();
     myLibrary.push(new Book(title.value, author.value, pages.value, readStatus.value));
-    libraryDisplay(myLibrary);
+    libraryDisplay();
     title.value = '';
     author.value = '';
     pages.value = '';
-}
+};
 
 // closes the modal
 close.onclick = (event)  => {
     event.preventDefault();
     modal.style.display = "none";
-}
+};
 
 // clicking outside of the modal also closes it
 window.onclick = (event) => {
   if (event.target == modal) {
     modal.style.display = "none";
   }
-}
+};
