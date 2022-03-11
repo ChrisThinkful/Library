@@ -1,87 +1,92 @@
-class Book {
-    constructor(title, author, pages, status) {
-        this.title = title;
-        this.author = author;
-        this.pages = pages;
-        this.status = status;
-    }
-};
-
-const readBtn = document.querySelectorAll('[data-read-button]')
-const newBookBtn = document.querySelector('[data-add-book]')
-const submitBtn = document.querySelector('[data-submit-button]')
-const myTable = document.querySelector('#table')
-const modal = document.getElementById("form-popup");
-const close = document.getElementById("close");
-const title = document.getElementById('title');
-const author = document.getElementById('author');
-const pages = document.getElementById('pages');
-const readStatus = document.getElementById('status');
-const table = document.createElement('table');
+// default library for shaping/styling purposes
 
 let myLibrary = [];
 
-let headers = ['Title', 'Author', 'Number of Pages', 'Read/Unread', 'Change'];
+function Book(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+}
 
-// headings for the table
-function headerDisplay() {
-    let headerRow = document.createElement('tr');
-    
-    headers.forEach(headerText => {
-        let header = document.createElement('th');
-        let textNode = document.createTextNode(headerText);
-        header.appendChild(textNode);
-        headerRow.appendChild(header);
-    });
-    table.appendChild(headerRow);
-    myTable.appendChild(table);
-};
+function addBookToLibrary() {
+  const title = document.querySelector('#title').value;
+  const author = document.querySelector('#author').value;
+  const pages = document.querySelector('#pages').value;
+  const read = document.querySelector('input[name="read-status"]:checked').value;
 
-headerDisplay();
+  const newBook = new Book(title, author, pages, read)
 
-// the display for books added to myLibrary
-function libraryDisplay() {
-    myLibrary.forEach(item => {
-        let row = document.createElement('tr');
-        let remove = document.createElement('td');
-        remove.innerHTML = '<button data-remove-button>' + 'Remove' + '</button>'
+  myLibrary.push(newBook)
 
-        Object.values(item).forEach(text => {
-            let cell = document.createElement('td');
-            let textNode = document.createTextNode(text);
-            cell.appendChild(textNode);
-            row.appendChild(cell);
-        })
-        row.appendChild(remove)
-        table.appendChild(row);
-    });
-    myTable.appendChild(table);
-};
+  displayBooks(newBook)
 
-// New Book button opens form to create a new book
-newBookBtn.onclick = () => {
-    modal.style.display = "flex";
-};
+  console.log(myLibrary)
+}
 
-// creates a new book
-submitBtn.onclick = (e) => {
-    e.preventDefault();
-    myLibrary.push(new Book(title.value, author.value, pages.value, readStatus.value));
-    libraryDisplay();
-    title.value = '';
-    author.value = '';
-    pages.value = '';
-};
 
-// closes the modal
-close.onclick = (event)  => {
-    event.preventDefault();
-    modal.style.display = "none";
-};
+function displayBooks(book) {
+  const booksDiv = document.querySelector('.books');
+    const bookCard = document.createElement('div');
+    booksDiv.appendChild(bookCard).classList.add('book-card');
 
-// clicking outside of the modal also closes it
-window.onclick = (event) => {
+    const bookTitle = document.createElement('h3');
+    bookTitle.innerHTML = `"${book.title}"`
+    bookCard.appendChild(bookTitle).classList.add('book-title');
+
+    const bookAuthor = document.createElement('p');
+    bookAuthor.innerHTML = `By: ${book.author}`;
+    bookCard.appendChild(bookAuthor).classList.add('book-author');
+
+    const bookPages = document.createElement('p');
+    bookPages.innerHTML = `${book.pages} pages`;
+    bookCard.appendChild(bookPages).classList.add('book-pages');
+
+    const bookRead = document.createElement('button');
+    bookRead.innerHTML = `${book.read}`
+    bookCard.appendChild(bookRead).classList.add('read-btn');
+
+
+    // right now this works to toggle the read status, but it breaks once there's more than one book.
+    const readBtn = document.querySelector('.read-btn');
+    readBtn.addEventListener('click', () => {
+    readBtn.innerHTML = (readBtn.innerHTML == 'Read') ? 'Unread' : 'Read';
+    })
+}
+
+
+const form = document.getElementById('book-form');
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  addBookToLibrary();
+  resetForm();
+})
+
+function resetForm() {
+  const title = document.querySelector('#title');
+  const author = document.querySelector('#author');
+  const pages = document.querySelector('#pages');
+
+  title.value = '';
+  author.value = '';
+  pages.value = '';
+}
+
+const modal = document.querySelector('.modal')
+const addBookBtn = document.querySelector('#addBookBtn')
+addBookBtn.onclick = () => modal.style.display = 'block';
+
+window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
-};
+}
+
+// When a user visits the site, there will be a button to add a Book
+// when they click that button, a modal will pop up where they can fill out a form
+// Upon submitting that form, a book object should be created from that input data
+// the book object should populate in the myLibrary
+// each book should display as a card with title, author, pages, read status(toggleable), as well as a delete & edit buttons
+
+// Secondary:
+// add localstorage usage
