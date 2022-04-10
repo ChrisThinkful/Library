@@ -78,9 +78,9 @@ function createBook(book) {
   bookCard.appendChild(bookRead).classList.add('read-btn');
 
   bookRead.addEventListener('click', () => {
+    console.log(bookRead.textContent)
     bookRead.textContent = (bookRead.textContent == 'Read') ? 'Unread' : 'Read';
     setData();
-    render();
   })
 
   // button to delete each item; removes from display and myLibrary
